@@ -19,6 +19,11 @@
         "Fragment Shader": "fragment_core_gaussian_blur.glsl",
         "Geometry Shader": ""
     },
+    "shaderGraceTint0": {
+        "Vertex Shader": "vertex_core_processing.glsl",
+        "Fragment Shader": "fragment_core_grace_tint.glsl",
+        "Geometry Shader": ""
+    },
     "shaderGreyscale0": {
         "Vertex Shader": "vertex_core_processing.glsl",
         "Fragment Shader": "fragment_core_greyscale.glsl",
