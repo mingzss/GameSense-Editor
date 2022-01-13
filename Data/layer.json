@@ -1,0 +1,10 @@
+{
+    "Default": {
+        "ZDepth": 2,
+        "CollisionLayers": [1239175796708298334]
+    },
+    "UI": {
+        "ZDepth": -30,
+        "CollisionLayers": []
+    }
+}

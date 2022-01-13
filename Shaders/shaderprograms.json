@@ -1,0 +1,67 @@
+{
+    "shader0": {
+        "Vertex Shader": "vertex_core.glsl",
+        "Fragment Shader": "fragment_core.glsl",
+        "Geometry Shader": ""
+    },
+    "shaderChromaticAberration0": {
+        "Vertex Shader": "vertex_core_processing.glsl",
+        "Fragment Shader": "fragment_core_chromatic_aberration.glsl",
+        "Geometry Shader": ""
+    },
+    "shaderColorGrading0": {
+        "Vertex Shader": "vertex_core_processing.glsl",
+        "Fragment Shader": "fragment_core_color_grading.glsl",
+        "Geometry Shader": ""
+    },
+    "shaderGaussianBlur0": {
+        "Vertex Shader": "vertex_core_processing.glsl",
+        "Fragment Shader": "fragment_core_gaussian_blur.glsl",
+        "Geometry Shader": ""
+    },
+    "shaderGreyscale0": {
+        "Vertex Shader": "vertex_core_processing.glsl",
+        "Fragment Shader": "fragment_core_greyscale.glsl",
+        "Geometry Shader": ""
+    },
+    "shaderLighting0": {
+        "Vertex Shader": "vertex_core_lighting.glsl",
+        "Fragment Shader": "fragment_core_lighting.glsl",
+        "Geometry Shader": ""
+    },
+    "shaderPostProcessFinal0": {
+        "Vertex Shader": "vertex_core_processing.glsl",
+        "Fragment Shader": "fragment_core_processing.glsl",
+        "Geometry Shader": ""
+    },
+    "shaderPostProcessFinal1": {
+        "Vertex Shader": "vertex_core_processing.glsl",
+        "Fragment Shader": "fragment_core_processingfinal.glsl",
+        "Geometry Shader": ""
+    },
+    "shaderTemperature0": {
+        "Vertex Shader": "vertex_core_processing.glsl",
+        "Fragment Shader": "fragment_core_temperature.glsl",
+        "Geometry Shader": ""
+    },
+    "shaderTint0": {
+        "Vertex Shader": "vertex_core_processing.glsl",
+        "Fragment Shader": "fragment_core_tint.glsl",
+        "Geometry Shader": ""
+    },
+    "shaderWF0": {
+        "Vertex Shader": "vertex_core.glsl",
+        "Fragment Shader": "WF_fragment_core.glsl",
+        "Geometry Shader": ""
+    },
+    "textshader0": {
+        "Vertex Shader": "textVertex_core.glsl",
+        "Fragment Shader": "textFragment_core.glsl",
+        "Geometry Shader": ""
+    },
+    "textshaderWF0": {
+        "Vertex Shader": "textVertex_core.glsl",
+        "Fragment Shader": "WF_textFragment_core.glsl",
+        "Geometry Shader": ""
+    }
+}

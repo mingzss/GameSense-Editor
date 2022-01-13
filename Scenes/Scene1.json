@@ -1,0 +1,38 @@
+{
+    "8256743279047802590": {
+        "name": "Camera",
+        "enabled": true,
+        "Transform": {
+            "position": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            },
+            "rotation": 0.0,
+            "layer": 1239175796708298334
+        },
+        "Camera": {
+            "enabled": true,
+            "zoom": 1.0,
+            "minZoom": 0.5,
+            "maxZoom": 2.0,
+            "zNear": -50.0,
+            "zFar": 100.0,
+            "viewportPos": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "viewportSize": {
+                "x": 100.0,
+                "y": 100.0
+            },
+            "smoothness": 12.0,
+            "goFollowing": 0,
+            "toRender": true
+        },
+        "ChildList": {}
+    }
+}
