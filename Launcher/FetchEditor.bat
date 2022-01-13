@@ -1,5 +1,12 @@
 echo OFF
 
+if not exist GameSense2D\ goto :ERROR
+
+rem -------------------------------------
+rem Set Directory
+rem -------------------------------------
+cd "GameSense2D"
+
 rem -------------------------------------
 rem Delete all local commits
 rem -------------------------------------
@@ -22,7 +29,7 @@ rem Retrieving editor from main branch
 rem -------------------------------------
 powershell write-host Retrieving Version Log File...
 echo.
-git checkout origin/main
+git checkout -f origin/main
 if %ERRORLEVEL% GEQ 1 goto :ERROR
 
 goto :DONE

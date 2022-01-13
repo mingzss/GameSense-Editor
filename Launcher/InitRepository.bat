@@ -1,8 +1,17 @@
 echo OFF
 
-if exist .git (
-    rmdir ".git" /S /Q
-)
+if exist GameSense2D\ rmdir "GameSense2D" /S /Q
+
+rem -------------------------------------
+rem Create RepoFolder
+rem -------------------------------------
+powershell write-host Creating Folder for GIT Repository...
+echo.
+mkdir "GameSense2D"
+cd "GameSense2D"
+if %ERRORLEVEL% GEQ 1 goto :ERROR
+
+
 rem -------------------------------------
 rem Initialize Folder as GIT Repository
 rem -------------------------------------
@@ -16,7 +25,7 @@ rem Add remote at URL
 rem -------------------------------------
 powershell write-host Adding Git URL to Repository...
 echo.
-git remote add origin https://github.com/mingzss/GameSense-Editor
+git remote add origin https://github.com/mingzss/GameSense-Editor.git
 if %ERRORLEVEL% GEQ 1 goto :ERROR
 
 goto :DONE

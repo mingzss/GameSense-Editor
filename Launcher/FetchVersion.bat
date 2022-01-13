@@ -1,5 +1,12 @@
 echo OFF
 
+if not exist GameSense2D\ goto :ERROR
+
+rem -------------------------------------
+rem Set Directory
+rem -------------------------------------
+cd "GameSense2D"
+
 rem -------------------------------------
 rem Fetch entire remote from url
 rem -------------------------------------
