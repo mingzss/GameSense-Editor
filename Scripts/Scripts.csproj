@@ -48,6 +48,7 @@
     <Compile Include="Debug.cs" />
     <Compile Include="EventManager.cs" />
     <Compile Include="GameObject.cs" />
+    <Compile Include="Graphics.cs" />
     <Compile Include="Input.cs" />
     <Compile Include="Physics.cs" />
     <Compile Include="SceneManager.cs" />
@@ -56,6 +57,7 @@
     <Compile Include="..\Assets\Scripts\*.cs" />
     <Compile Include="Time.cs" />
     <Compile Include="Types.cs" />
+    <Compile Include="Utility.cs" />
     <Compile Include="Window.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
