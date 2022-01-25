@@ -1808,7 +1808,7 @@ namespace GSEngine
         { 
             get
             {
-                AnimController a;
+                AnimController a = new AnimController();
                 a.enabled = GetAnimControllerEnabled_Native(entity);
                 a.controller_name = GetAnimControllerControllerName_Native(entity);
                 return a;
