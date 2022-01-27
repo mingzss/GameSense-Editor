@@ -92,5 +92,10 @@ namespace GSEngine
         {
             subscribers[message].Broadcast(args);
         }
+
+        public static void ClearAllMessages()
+        {
+            subscribers.Clear();
+        }
     }
 }

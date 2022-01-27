@@ -48,6 +48,7 @@
     <Compile Include="Debug.cs" />
     <Compile Include="EventManager.cs" />
     <Compile Include="GameObject.cs" />
+    <Compile Include="GlobalResource.cs" />
     <Compile Include="Graphics.cs" />
     <Compile Include="Input.cs" />
     <Compile Include="Physics.cs" />
