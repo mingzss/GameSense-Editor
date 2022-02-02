@@ -42,24 +42,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attributes.cs" />
-    <Compile Include="Audio.cs" />
-    <Compile Include="Component.cs" />
-    <Compile Include="Debug.cs" />
-    <Compile Include="EventManager.cs" />
-    <Compile Include="GameObject.cs" />
-    <Compile Include="GlobalResource.cs" />
-    <Compile Include="Graphics.cs" />
-    <Compile Include="Input.cs" />
-    <Compile Include="Physics.cs" />
-    <Compile Include="SceneManager.cs" />
-    <Compile Include="ScriptBase.cs" />
+    <Compile Include="Engine\Attributes.cs" />
+    <Compile Include="Engine\Audio.cs" />
+    <Compile Include="Engine\Component.cs" />
+    <Compile Include="Engine\Debug.cs" />
+    <Compile Include="Engine\EventManager.cs" />
+    <Compile Include="Engine\GameObject.cs" />
+    <Compile Include="Engine\GlobalResource.cs" />
+    <Compile Include="Engine\Graphics.cs" />
+    <Compile Include="Engine\Input.cs" />
+    <Compile Include="Engine\LightingEngine.cs" />
+    <Compile Include="Engine\Physics.cs" />
+    <Compile Include="Engine\SceneManager.cs" />
+    <Compile Include="Engine\ScriptBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="..\Assets\Scripts\*.cs" />
-    <Compile Include="Time.cs" />
-    <Compile Include="Types.cs" />
-    <Compile Include="Utility.cs" />
-    <Compile Include="Window.cs" />
+    <Compile Include="Engine\Time.cs" />
+    <Compile Include="Engine\Types.cs" />
+    <Compile Include="Engine\Utility.cs" />
+    <Compile Include="Engine\Window.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
