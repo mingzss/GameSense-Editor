@@ -935,6 +935,19 @@ namespace GSEngine
             }
         }
 
+        public bool Enabled
+        {
+            get
+            {
+                return GetCameraEnabled_Native(entity);
+            }
+
+            set
+            {
+                SetCameraEnabled_Native(entity, value);
+            }
+        }
+
         public float CameraHeight
         {
             get
@@ -1072,6 +1085,12 @@ namespace GSEngine
         internal static extern void SetCamera_Native(ulong entity, ref Camera inCamera);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
+        internal static extern bool GetCameraEnabled_Native(ulong entity);
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        internal static extern void SetCameraEnabled_Native(ulong entity, bool inCamera);
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
         internal static extern void GetCameraPosition_Native(ulong entity, out Vector2 outPosition);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
@@ -1195,18 +1214,6 @@ namespace GSEngine
             }
         }
 
-        public bool Enabled
-        {
-            get
-            {
-                return GetAudioObjectEnabled_Native(entity);
-            }
-            set
-            {
-                SetAudioObjectEnabled_Native(entity, value);
-            }
-        }
-
         public bool Loop
         {
             get
@@ -1216,18 +1223,6 @@ namespace GSEngine
             set
             {
                 SetAudioObjectLoop_Native(entity, value);
-            }
-        }
-
-        public bool StereoSound
-        {
-            get
-            {
-                return GetAudioObjectStereoSound_Native(entity);
-            }
-            set
-            {
-                SetAudioObjectStereoSound_Native(entity, value);
             }
         }
 
@@ -1268,11 +1263,6 @@ namespace GSEngine
             {
                 SetAudioObjectEQGroup_Native(entity, value);
             }
-        }
-
-        public void LoadAssetPath()
-        {
-            LoadAssetPath_Native(entity);
         }
 
         public void Play()
@@ -1318,22 +1308,10 @@ namespace GSEngine
         internal static extern void SetAudioObjectSoundFile_Native(ulong entity, string inSoundFile);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        internal static extern bool GetAudioObjectEnabled_Native(ulong entity);
-
-        [MethodImpl(MethodImplOptions.InternalCall)]
-        internal static extern void SetAudioObjectEnabled_Native(ulong entity, bool inEnabled);
-
-        [MethodImpl(MethodImplOptions.InternalCall)]
         internal static extern bool GetAudioObjectLoop_Native(ulong entity);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         internal static extern void SetAudioObjectLoop_Native(ulong entity, bool inLoop);
-
-        [MethodImpl(MethodImplOptions.InternalCall)]
-        internal static extern bool GetAudioObjectStereoSound_Native(ulong entity);
-
-        [MethodImpl(MethodImplOptions.InternalCall)]
-        internal static extern void SetAudioObjectStereoSound_Native(ulong entity, bool inStereoSound);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         internal static extern float GetAudioObjectVolume_Native(ulong entity);
@@ -1352,9 +1330,6 @@ namespace GSEngine
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         internal static extern void SetAudioObjectEQGroup_Native(ulong entity, EQ_GROUP inSoundGroup);
-
-        [MethodImpl(MethodImplOptions.InternalCall)]
-        internal static extern void LoadAssetPath_Native(ulong entity);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         internal static extern void Play_Native(ulong entity);
@@ -1599,19 +1574,6 @@ namespace GSEngine
             }
         }
 
-        public Vector2 Offset
-        {
-            get
-            {
-                GetCircleCollider2DOffset_Native(entity, out Vector2 result);
-                return result;
-            }
-            set
-            {
-                SetCircleCollider2DOffset_Native(entity, ref value);
-            }
-        }
-
         public bool CollidedWithLayer(string Layer)
         {
             return CircleCollider2D_CollidedWithLayer_Native(entity, Layer);
@@ -1640,12 +1602,6 @@ namespace GSEngine
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         internal static extern bool GetCircleCollider2DTriggered_Native(ulong entity);
-
-        [MethodImpl(MethodImplOptions.InternalCall)]
-        internal static extern void GetCircleCollider2DOffset_Native(ulong entity, out Vector2 outOffset);
-
-        [MethodImpl(MethodImplOptions.InternalCall)]
-        internal static extern void SetCircleCollider2DOffset_Native(ulong entity, ref Vector2 inOffset);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         internal static extern bool CircleCollider2D_CollidedWithLayer_Native(ulong entity, string Layer);
@@ -1808,7 +1764,7 @@ namespace GSEngine
         { 
             get
             {
-                AnimController a = new AnimController();
+                AnimController a;
                 a.enabled = GetAnimControllerEnabled_Native(entity);
                 a.controller_name = GetAnimControllerControllerName_Native(entity);
                 return a;

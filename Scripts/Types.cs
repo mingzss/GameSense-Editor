@@ -9,16 +9,6 @@ using System.Threading.Tasks;
 namespace GSEngine
 {
     [StructLayout(LayoutKind.Sequential)]
-    public struct ComponentBase
-    {
-        public bool isDirty;
-
-        public ComponentBase(bool dirty = true)
-        {
-            isDirty = dirty;
-        }
-    }
-    [StructLayout(LayoutKind.Sequential)]
     public struct Vector2
     {
         public float x;
@@ -144,8 +134,6 @@ namespace GSEngine
 
         public Vector2 scale;
 
-        private ComponentBase component_base;
-
         //more positive = further away from camera
         public string layer;
 
@@ -155,7 +143,6 @@ namespace GSEngine
             rotation = rot;
             scale = scl;
             layer = zd;
-            component_base = new ComponentBase();
         }
     }
 
@@ -171,9 +158,6 @@ namespace GSEngine
         public Vector2 anchor;
 
         public int sortingorder;
-
-        private ComponentBase component_base;
-
         public UITransform(Vector2 pos = new Vector2(), float rot = 0, Vector2 scl = new Vector2(), Vector2 ancr = new Vector2(), int sortOrder = 0)
         {
             position = pos;
@@ -181,7 +165,6 @@ namespace GSEngine
             scale = scl;
             anchor = ancr;
             sortingorder = sortOrder;
-            component_base = new ComponentBase();
         }
     }
 
@@ -207,7 +190,6 @@ namespace GSEngine
         public SHEAR_DIRECTION direction;
         public float magnitude;
         public SHEARED_VERTICES shearedVertex;
-        private ComponentBase component_base;
     }
 
     public enum RENDERING_MODE
@@ -275,7 +257,7 @@ namespace GSEngine
         public bool IsFlippedY;
 
         private readonly Vector4 CustomTexturePercent;
-        private ComponentBase component_base;
+
         public DrawProperties DrawProperties;
 
         public string ImagePath;
@@ -308,7 +290,6 @@ namespace GSEngine
         public float Height;
         public Vector4 TextColor;
         public int PixelsPerUnit;
-        private ComponentBase component_base;
         public DrawProperties DrawProperties;
         public string FontPath;
         public string Text;
@@ -328,6 +309,19 @@ namespace GSEngine
     [StructLayout(LayoutKind.Sequential)]
     public struct Camera
     {
+        private Vector2 Up;
+        private Vector2 Right;
+        private bool ProjMatChanged;
+
+        private ShakeProperties ShakeProperties;
+
+        private Matrix4 ProjectionMatrix;
+        private Matrix4 CameraMatrix;
+
+        private int GameWidth;
+        private int GameHeight;
+
+        public bool Enabled;
         private float zNear;
         private float zFar;
         public float Zoom;
@@ -342,25 +336,6 @@ namespace GSEngine
         public bool FollowX;
         public bool FollowY;
         public bool ToRender;
-
-        private Vector2 Up;
-        private Vector2 Right;
-        private bool ProjMatChanged;
-
-        private ShakeProperties ShakeProperties;
-
-        private Matrix4 ProjectionMatrix;
-        private Matrix4 CameraMatrix;
-        private Matrix4 UIProjectionMatrix;
-
-        private int GameWidth;
-        private int GameHeight;
-
-        private float AspectRatio;
-        private int ScreenWidth;
-        private int ScreenHeight;
-
-        private ComponentBase component_base;
     }
 
     public enum SOUND_GROUP
@@ -383,15 +358,10 @@ namespace GSEngine
     public struct AudioObject
     {
         private int ChannelID;
-        private uint PlayCount;
-        public bool Enabled;
         public bool Loop;
-        public bool StereoSound;
         public float Volume;
-        public EQ_GROUP EQGroup;
         public SOUND_GROUP SoundGroup;
-        private ComponentBase component_base;
-
+        public EQ_GROUP EQGroup;
         public string SoundFile;
     }
 
@@ -423,8 +393,6 @@ namespace GSEngine
         private float inverse_mass;
         private float inverse_rotational_inertia;
         private float sleep_timer;
-
-        private ComponentBase component_base;
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -434,8 +402,6 @@ namespace GSEngine
         public bool enabled;
         public bool is_trigger;
         public bool was_triggered;
-        public Vector2 offset;
-        private ComponentBase component_base;
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -447,15 +413,12 @@ namespace GSEngine
         public bool enabled;
         public bool is_trigger;
         private readonly bool was_triggered;
-        private ComponentBase component_base;
     }
 
     [StructLayout(LayoutKind.Sequential)]
     public struct AnimController
     {
         public bool enabled;
-        private bool nameUpdated;
-        private ComponentBase component_base;
         public string controller_name;
     }
 }

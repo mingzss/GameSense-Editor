@@ -76,7 +76,7 @@ namespace GSEngine
             }
 
             IEvent.Listener listener = new IEvent.Listener(sender, function);
-            subscribers[message].listeners.Add(listener);
+            subscribers[message].listeners.Append(listener);
         }
 
         public static void UnSubscribe(string message, object sender)
@@ -91,11 +91,6 @@ namespace GSEngine
         public static void Broadcast(string message, object[] args)
         {
             subscribers[message].Broadcast(args);
-        }
-
-        public static void ClearAllMessages()
-        {
-            subscribers.Clear();
         }
     }
 }
