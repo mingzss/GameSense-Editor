@@ -23,7 +23,6 @@ namespace GSEngine
         }
         public string Name { get; set; }
         public List<Listener> listeners = new List<Listener>();
-        private List<Listener> ToRemove = new List<Listener>();
 
         public void Broadcast(object[] args)
         {
@@ -43,9 +42,14 @@ namespace GSEngine
                     ToRemove.Add(l);
                 }
             }
+            foreach (Listener l in ToRemove)
+            {
+                listeners.Remove(l);
+            }
         }
         public void RemoveListener(object sender)
         {
+            List<Listener> ToRemove = new List<Listener>();
             foreach(Listener l in listeners)
             {
                 if(l.Sender == sender)
@@ -53,11 +57,7 @@ namespace GSEngine
                     ToRemove.Add(l);
                 }
             }
-        }
-
-        public void RemoveUnsubbedListeners()
-        {
-            foreach (Listener l in ToRemove)
+            foreach(Listener l in ToRemove)
             {
                 listeners.Remove(l);
             }
@@ -66,7 +66,6 @@ namespace GSEngine
     public static class EventManager
     {
         private static Dictionary<string, IEvent> subscribers = new Dictionary<string, IEvent>();
-       
         public static void Subscribe(string message, object sender, CallbackMethod function)
         {
             if(!subscribers.ContainsKey(message))
@@ -77,7 +76,7 @@ namespace GSEngine
             }
 
             IEvent.Listener listener = new IEvent.Listener(sender, function);
-            subscribers[message].listeners.Add(listener);
+            subscribers[message].listeners.Append(listener);
         }
 
         public static void UnSubscribe(string message, object sender)
@@ -92,19 +91,6 @@ namespace GSEngine
         public static void Broadcast(string message, object[] args)
         {
             subscribers[message].Broadcast(args);
-        }
-
-        public static void ClearAllMessages()
-        {
-            subscribers.Clear();
-        }
-
-        public static void RemoveUnSubbedMessages()
-        {
-            foreach (IEvent e in subscribers.Values)
-            {
-                e.RemoveUnsubbedListeners();
-            }
         }
     }
 }
