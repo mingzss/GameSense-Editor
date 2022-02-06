@@ -129,7 +129,7 @@ void main()
 
     fs_color = texture(uTex2dArray, vec3(gs_texcoord, gl_Layer));
 
-	if(fs_color.a < 0.05f)
+	if(fs_color.a < EPSILON)
 		discard;
 		
 	vec4 blurAmount = uBlurAmounts[gl_Layer];

@@ -1,6 +1,7 @@
 #version 440
 #define PI 3.14159265359
 #define E 2.71828182846
+#define EPSILON 1e-10
 
 in vec2 	 					vs_texcoord;
 
@@ -18,7 +19,7 @@ uniform sampler2D				uTex2d;
 void main()
 {	
 	vec4 clr = texture(uTex2d, vs_texcoord);
-	if(clr.a < 0.05f)
+	if(clr.a < EPSILON)
 		discard;
 		
 	vec4 oColor;

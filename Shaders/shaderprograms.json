@@ -1,77 +1,72 @@
 {
-  "shader0": {
-    "Vertex Shader": "vertex_core.glsl",
-    "Fragment Shader": "fragment_core.glsl",
-    "Geometry Shader": "geometry_core.glsl"
-  },
-  "shaderColorGrading0": {
-    "Vertex Shader": "vertex_processing.glsl",
-    "Fragment Shader": "fragment_color_grading.glsl",
-    "Geometry Shader": ""
-  },
-  "shaderGaussianBlur0": {
-    "Vertex Shader": "vertex_processing.glsl",
-    "Fragment Shader": "fragment_gaussian_blur.glsl",
-    "Geometry Shader": ""
-  },
-  "shaderGraceTint0": {
-    "Vertex Shader": "vertex_processing.glsl",
-    "Fragment Shader": "fragment_grace_tint.glsl",
-    "Geometry Shader": ""
-  },
-  "shaderGreyscale0": {
-    "Vertex Shader": "vertex_processing.glsl",
-    "Fragment Shader": "fragment_greyscale.glsl",
-    "Geometry Shader": ""
-  },
-  "shaderLighting0": {
-    "Vertex Shader": "vertex_core.glsl",
-    "Fragment Shader": "fragment_lighting.glsl",
-    "Geometry Shader": "geometry_core.glsl"
-  },
-  "shaderMerge": {
-    "Vertex Shader": "vertex_processing.glsl",
-    "Fragment Shader": "fragment_merge.glsl",
-    "Geometry Shader": ""
-  },
-  "shaderPostProcessFinal0": {
-    "Vertex Shader": "vertex_processing.glsl",
-    "Fragment Shader": "fragment_processing.glsl",
-    "Geometry Shader": ""
-  },
-  "shaderPostProcessFinal1": {
-    "Vertex Shader": "vertex_processing.glsl",
-    "Fragment Shader": "fragment_processingfinal.glsl",
-    "Geometry Shader": ""
-  },
-  "shaderPostProcessingLayered0": {
-    "Vertex Shader": "vertex_processing.glsl",
-    "Fragment Shader": "fragment_processing_layered.glsl",
-    "Geometry Shader": "geometry_layered.glsl"
-  },
-  "shaderTemperature0": {
-    "Vertex Shader": "vertex_processing.glsl",
-    "Fragment Shader": "fragment_temperature.glsl",
-    "Geometry Shader": ""
-  },
-  "shaderTint0": {
-    "Vertex Shader": "vertex_processing.glsl",
-    "Fragment Shader": "fragment_tint.glsl",
-    "Geometry Shader": ""
-  },
-  "shaderWF0": {
-    "Vertex Shader": "vertex_core.glsl",
-    "Fragment Shader": "WF_fragment_core.glsl",
-    "Geometry Shader": ""
-  },
-  "textshader0": {
-    "Vertex Shader": "textVertex_core.glsl",
-    "Fragment Shader": "textFragment_core.glsl",
-    "Geometry Shader": ""
-  },
-  "textshaderWF0": {
-    "Vertex Shader": "textVertex_core.glsl",
-    "Fragment Shader": "WF_textFragment_core.glsl",
-    "Geometry Shader": ""
-  }
+    "shader0": {
+        "Vertex Shader": "vertex_core.glsl",
+        "Fragment Shader": "fragment_core.glsl",
+        "Geometry Shader": "geometry_core.glsl"
+    },
+    "shaderColorGrading0": {
+        "Vertex Shader": "vertex_processing.glsl",
+        "Fragment Shader": "fragment_color_grading.glsl",
+        "Geometry Shader": ""
+    },
+    "shaderGaussianBlur0": {
+        "Vertex Shader": "vertex_processing.glsl",
+        "Fragment Shader": "fragment_gaussian_blur.glsl",
+        "Geometry Shader": ""
+    },
+    "shaderGraceTint0": {
+        "Vertex Shader": "vertex_processing.glsl",
+        "Fragment Shader": "fragment_grace_tint.glsl",
+        "Geometry Shader": ""
+    },
+    "shaderGreyscale0": {
+        "Vertex Shader": "vertex_processing.glsl",
+        "Fragment Shader": "fragment_greyscale.glsl",
+        "Geometry Shader": ""
+    },
+    "shaderLighting0": {
+        "Vertex Shader": "vertex_core.glsl",
+        "Fragment Shader": "fragment_lighting.glsl",
+        "Geometry Shader": "geometry_core.glsl"
+    },
+    "shaderMerge": {
+        "Vertex Shader": "vertex_processing.glsl",
+        "Fragment Shader": "fragment_merge.glsl",
+        "Geometry Shader": ""
+    },
+    "shaderPostProcessFinal0": {
+        "Vertex Shader": "vertex_processing.glsl",
+        "Fragment Shader": "fragment_processing.glsl",
+        "Geometry Shader": ""
+    },
+    "shaderPostProcessingLayered0": {
+        "Vertex Shader": "vertex_processing.glsl",
+        "Fragment Shader": "fragment_processing_layered.glsl",
+        "Geometry Shader": "geometry_layered.glsl"
+    },
+    "shaderTemperature0": {
+        "Vertex Shader": "vertex_processing.glsl",
+        "Fragment Shader": "fragment_temperature.glsl",
+        "Geometry Shader": ""
+    },
+    "shaderTint0": {
+        "Vertex Shader": "vertex_processing.glsl",
+        "Fragment Shader": "fragment_tint.glsl",
+        "Geometry Shader": ""
+    },
+    "shaderWF0": {
+        "Vertex Shader": "vertex_core.glsl",
+        "Fragment Shader": "WF_fragment_core.glsl",
+        "Geometry Shader": ""
+    },
+    "textshader0": {
+        "Vertex Shader": "textVertex_core.glsl",
+        "Fragment Shader": "textFragment_core.glsl",
+        "Geometry Shader": ""
+    },
+    "textshaderWF0": {
+        "Vertex Shader": "textVertex_core.glsl",
+        "Fragment Shader": "WF_textFragment_core.glsl",
+        "Geometry Shader": ""
+    }
 }

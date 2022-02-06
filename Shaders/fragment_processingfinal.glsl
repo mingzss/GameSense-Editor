@@ -12,5 +12,4 @@ void main()
 	if (clr.a < 0.05f)
 		discard;
     fs_color = clr;
-    fs_color.rgb *= fs_color.a;
 }

@@ -88,12 +88,13 @@ vec3 RGBtoHSL(vec3 RGB)
 
 void main()
 {    
+    vec4 image = texture(uTex2d, vs_texcoord);
+    if (image.a < EPSILON)
+        discard;
+
     float factor = saturate(uTemperatureSaturation * 2.0);
     float colorTempK = mix(1000.0, 40000.0, uTemperature);
     
-    vec4 image = texture(uTex2d, vs_texcoord);
-    if (image.a < 0.05f)
-        discard;
     vec3 colorTempRGB = ColorTemperatureToRGB(colorTempK);
     
     float originalLuminance = Luminance(image.rgb);

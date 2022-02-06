@@ -1,5 +1,7 @@
 #version 440
 
+#define EPSILON 1e-10
+
 in vec2 	 					vs_texcoord;
 
 out vec4 						fs_color;
@@ -9,6 +11,10 @@ uniform sampler2D               uTex2d;
 
 void main()
 {
-    vec3 mixColor = texture(uTex2d, vs_texcoord).rgb * uTintColor;
-    fs_color   = vec4( mixColor.rgb, texture(uTex2d, vs_texcoord).a );
+    fs_color = texture(uTex2d, vs_texcoord);
+    if(fs_color.a < EPSILON)
+		discard;
+
+    vec3 mixColor = fs_color.rgb * uTintColor;
+    fs_color = vec4( mixColor.rgb, fs_color.a );
 }

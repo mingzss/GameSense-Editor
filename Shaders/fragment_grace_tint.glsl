@@ -48,8 +48,11 @@ vec3 RGBtoHSL(vec3 RGB)
 
 void main()
 {
-    vec3 baseHSL = RGBtoHSL(texture(uTex2d, vs_texcoord).rgb);
+    fs_color = texture(uTex2d, vs_texcoord);
+    if(fs_color.a < EPSILON)
+        discard;
+    vec3 baseHSL = RGBtoHSL(fs_color.rgb);
     vec3 blendHSL = RGBtoHSL(uTintColor);
     vec3 outHSL = vec3(blendHSL.rg, baseHSL.b);
-    fs_color = vec4(HSLtoRGB(outHSL), texture(uTex2d, vs_texcoord).a);
+    fs_color = vec4(HSLtoRGB(outHSL), fs_color.a);
 }
