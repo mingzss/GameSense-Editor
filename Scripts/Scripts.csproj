@@ -45,6 +45,7 @@
     <Compile Include="Engine\Attributes.cs" />
     <Compile Include="Engine\Audio.cs" />
     <Compile Include="Engine\Component.cs" />
+    <Compile Include="Engine\Coroutine.cs" />
     <Compile Include="Engine\Debug.cs" />
     <Compile Include="Engine\EventManager.cs" />
     <Compile Include="Engine\GameObject.cs" />
