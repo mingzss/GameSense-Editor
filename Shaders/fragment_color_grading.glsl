@@ -1,5 +1,7 @@
 #version 440
 
+#define EPSILON 1e-10
+
 in vec2 	 					vs_texcoord;
 
 out vec4 						fs_color;
@@ -40,6 +42,10 @@ vec4 applyHSBEffect(vec4 startColor, vec4 hsbc)
 
 void main()
 {
+    fs_color = texture(uTex2d, vs_texcoord);
+    if (fs_color.a < EPSILON)
+        discard;
+
     vec4 hsbc = vec4(uHue, uSaturation, uBrightness, uContrast);
-    fs_color = applyHSBEffect(texture(uTex2d, vs_texcoord), hsbc);
+    fs_color = applyHSBEffect(fs_color, hsbc);
 }
