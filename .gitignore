@@ -73,6 +73,3 @@ ipch/
 *.VC.VC.opendb
 
 .vs
-Debug
-Release
-
