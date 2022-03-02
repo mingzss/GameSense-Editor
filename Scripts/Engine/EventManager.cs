@@ -89,8 +89,13 @@ namespace GSEngine
             subscribers[message].RemoveListener(sender, function);
         }
 
-        public static void Broadcast(string message, object[] args)
+        public static void Broadcast(string message, object[] args = null)
         {
+            if(!subscribers.ContainsKey(message))
+            {
+                Debug.Log("Warning: Event Message \"" + message + "\" does not exists in manager (No one is listening to this message)");
+                return;
+            }
             subscribers[message].Broadcast(args);
         }
 

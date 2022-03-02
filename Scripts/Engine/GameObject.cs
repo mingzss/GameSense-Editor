@@ -16,6 +16,18 @@ namespace GSEngine
             ID = e;
         }
 
+        public GameObject Parent
+        {
+            get
+            {
+                ulong parentID = GetEntityParentID(ID);
+                if (parentID != 0)
+                    return new GameObject(parentID);
+                else
+                    return null;
+            }
+        }
+
         public string Name
         {
             get
@@ -428,6 +440,9 @@ namespace GSEngine
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         private static extern void DestroyEntity_Native(ulong entity);
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        private static extern ulong GetEntityParentID(ulong entity);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         private static extern ulong GetEntityIDByName_Native(string name);
