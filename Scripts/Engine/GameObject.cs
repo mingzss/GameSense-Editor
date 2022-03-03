@@ -10,7 +10,7 @@ namespace GSEngine
     public class GameObject
     {
         const ulong NIL = 0;
-        private readonly ulong ID = 0;
+        public readonly ulong ID = 0;
         public GameObject(ulong e)
         {
             ID = e;

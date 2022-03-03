@@ -1008,15 +1008,15 @@ namespace GSEngine
             }
         }
 
-        public ulong GoFollowing
+        public GameObject GoFollowing
         {
             get
             {
-                return GetCameraGOFollowing_Native(entity);
+                return new GameObject(GetCameraGOFollowing_Native(entity));
             }
             set
             {
-                SetCameraGOFollowing_Native(entity, value);
+                SetCameraGOFollowing_Native(entity, value.ID);
             }
         }
 
