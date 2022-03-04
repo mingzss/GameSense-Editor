@@ -12,6 +12,7 @@ out vec4 						fs_color;
 uniform int 					uPassNumber;
 uniform int                     uToColorGrade[MAX_LAYERS];
 uniform int                     uToGreyscale[MAX_LAYERS];
+uniform int                     uToGraceTint[MAX_LAYERS];
 uniform float 					uTexWidth;
 uniform float 					uTexHeight;
 uniform vec3                    uTemperatureSettings[MAX_LAYERS];
@@ -75,6 +76,18 @@ vec3 HSLtoRGB(vec3 HSL)
     vec3 RGB = HUEtoRGB(HSL.x);
     float C = (1.0 - abs(2.0 * HSL.z - 1.0)) * HSL.y;
     return (RGB - 0.5) * C + vec3(HSL.z);
+}
+
+vec3 HSVtoHSL(vec3 HSV)
+{
+    vec3 HSL;
+    HSL.r = HSV.r;
+    HSL.b = HSV.b - HSV.b * (HSV.g) * 0.5;
+    if (abs(HSL.b) < EPSILON || abs(HSL.b - 1.0) < EPSILON)
+        HSL.g = 0.0;
+    else
+        HSL.g = (HSV.b - HSL.b) / min(HSL.b, 1.0 - HSL.b);
+    return HSL;
 }
  
 vec3 RGBtoHCV(vec3 RGB)
@@ -211,12 +224,14 @@ void main()
         }
 
         vec4 graceTintClr = uGraceTintColors[gl_Layer];
-        if (graceTintClr.a >= 0.f)
+        if (bool(uToGraceTint[gl_Layer]))
         {
             vec3 baseHSL = RGBtoHSL(fs_color.rgb);
-            vec3 blendHSL = RGBtoHSL(graceTintClr.rgb);
+            vec3 blendHSL = HSVtoHSL(graceTintClr.rgb);
             vec3 outHSL = vec3(blendHSL.rg, baseHSL.b);
-            fs_color.rgb = HSLtoRGB(outHSL);
+            fs_color = 
+                mix(fs_color, vec4(HSLtoRGB(outHSL), fs_color.a), 
+                    graceTintClr.a);
         }
     }
 }

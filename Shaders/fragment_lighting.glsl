@@ -31,7 +31,9 @@ struct PointLight
 };
 
 uniform int uNumLights;
-uniform sampler2D textureSamples[32];
+uniform vec2 uWindowSize;
+uniform sampler2D textureSamples[31];
+uniform sampler2DArray uTexSpriteLights;
 uniform GlobalLight uGlobalLight;
 
 layout(std140) uniform PointLightArray
@@ -117,7 +119,13 @@ void main()
 	
 	vec4 globalLightFactor = 
 		vec4(uGlobalLight.clr * uGlobalLight.intensity, 1.0f);
-	vec4 totalLightFactor = globalLightFactor + ptLightFactor;
+
+	vec2 spriteUV = 
+		vec2(gl_FragCoord.x / uWindowSize.x, gl_FragCoord.y / uWindowSize.y);
+	vec4 spriteLightFactor =
+		texture(uTexSpriteLights, vec3(spriteUV, gl_Layer));
+	vec4 totalLightFactor = 
+		globalLightFactor + ptLightFactor + spriteLightFactor;
 	totalLightFactor.rgb *= totalLightFactor.a;
 	col *= gs_sprite_color;
 	col.rgb *= col.a;
