@@ -67,10 +67,10 @@ namespace GSEngine
                     public static extern void Disable(string modename);
 
                     [MethodImpl(MethodImplOptions.InternalCall)]
-                    public static extern void GetColor(string modename, out Vector3 outcolor);
+                    public static extern void GetColor(string modename, out Vector4 outcolor);
 
                     [MethodImpl(MethodImplOptions.InternalCall)]
-                    public static extern void SetColor(string modename, ref Vector3 incolor);
+                    public static extern void SetColor(string modename, ref Vector4 incolor);
                 }
 
                 public class ChromaticAberration
@@ -232,10 +232,10 @@ namespace GSEngine
                 public static extern void Disable(string layername, string modename);
 
                 [MethodImpl(MethodImplOptions.InternalCall)]
-                public static extern void GetColor(string layername, string modename, out Vector3 outcolor);
+                public static extern void GetColor(string layername, string modename, out Vector4 outcolor);
 
                 [MethodImpl(MethodImplOptions.InternalCall)]
-                public static extern void SetColor(string layername, string modename, ref Vector3 incolor);
+                public static extern void SetColor(string layername, string modename, ref Vector4 incolor);
             }
 
             public class ChromaticAberration
