@@ -417,6 +417,13 @@ namespace GSEngine
                 return GetComponent<LightSourceComponent>();
             }
         }
+        public SpriteLightComponent spritelight
+        {
+            get
+            {
+                return GetComponent<SpriteLightComponent>();
+            }
+        }
 
         public static GameObject Instantiate(string name = "", bool isUI = false)
         {

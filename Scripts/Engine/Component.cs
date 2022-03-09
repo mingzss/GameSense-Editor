@@ -1820,6 +1820,28 @@ namespace GSEngine
 
     }
 
+    public class SpriteLightComponent : Component
+    {
+        public float Intensity
+        {
+            get
+            {
+                return GetSpriteLightIntensity_Native(entity);
+            }
+            set
+            {
+                SetSpriteLightIntensity_Native(entity, value);
+            }
+        }
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        internal static extern float GetSpriteLightIntensity_Native(ulong entity);
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        internal static extern void SetSpriteLightIntensity_Native(ulong entity, float inIntensity);
+
+    }
+
     public class AnimControllerComponent : Component
     {
         public AnimController AnimController
