@@ -128,7 +128,7 @@ vec4 applyHSBEffect(vec4 startColor, vec4 hsbc)
     vec4 outputColor = startColor;
     outputColor.rgb = applyHue(outputColor.rgb, _Hue);
     outputColor.rgb = (outputColor.rgb - 0.5f) * (_Contrast) + 0.5f;
-    outputColor.rgb = outputColor.rgb + _Brightness;
+    outputColor.rgb = outputColor.rgb + _Brightness * startColor.a;
     
     float intensity_val = dot(outputColor.rgb, vec3(0.299,0.587,0.114));
     vec3 intensity = vec3(intensity_val, intensity_val, intensity_val);
@@ -175,7 +175,7 @@ void main()
 			oColor += texture(uTex2dArray, vec3(uv, gl_Layer)) * gauss;
 		}
 		oColor = oColor / sum;
-		fs_color = oColor;
+		fs_color.rgb = oColor.rgb;
 	}
 
     if (uPassNumber == 2)
@@ -204,15 +204,14 @@ void main()
             vec3 luminancePreservedRGB = HSLtoRGB(
                     vec3(resultHSL.x, resultHSL.y, originalLuminance));
             
-            fs_color = 
-                vec4(mix(blended, luminancePreservedRGB, 
-                    LUMINANCE_PRESERVATION), 1.0);
+            fs_color.rgb = mix(blended, luminancePreservedRGB, 
+                    LUMINANCE_PRESERVATION);
         }
 
         if (bool(uToGreyscale[gl_Layer])) 
         {
             float grey_value = (fs_color.r + fs_color.g + fs_color.b) / 3.0;
-            fs_color = vec4(grey_value, grey_value, grey_value, 1.0);
+            fs_color.rgb = vec3(grey_value, grey_value, grey_value);
         }
 
         vec4 tintClr = uTintColors[gl_Layer];
@@ -220,7 +219,7 @@ void main()
         if (tintClr.a >= 0.f)
         {
             vec3 mixColor = fs_color.rgb * tintClr.rgb;
-            fs_color = vec4( mixColor.rgb, fs_color.a);
+            fs_color.rgb = mixColor;
         }
 
         vec4 graceTintClr = uGraceTintColors[gl_Layer];
@@ -229,8 +228,7 @@ void main()
             vec3 baseHSL = RGBtoHSL(fs_color.rgb);
             vec3 blendHSL = HSVtoHSL(graceTintClr.rgb);
             vec3 outHSL = vec3(blendHSL.rg, baseHSL.b);
-            fs_color = 
-                mix(fs_color, vec4(HSLtoRGB(outHSL), fs_color.a), 
+            fs_color = mix(fs_color, vec4(HSLtoRGB(outHSL), fs_color.a), 
                     graceTintClr.a);
         }
     }
