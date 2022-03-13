@@ -13,6 +13,7 @@ uniform int 					uPassNumber;
 uniform int                     uToColorGrade[MAX_LAYERS];
 uniform int                     uToGreyscale[MAX_LAYERS];
 uniform int                     uToGraceTint[MAX_LAYERS];
+uniform float                   uRadiusToApply;
 uniform float 					uTexWidth;
 uniform float 					uTexHeight;
 uniform vec3                    uTemperatureSettings[MAX_LAYERS];
@@ -144,92 +145,130 @@ void main()
 
 	if(fs_color.a < EPSILON)
 		discard;
-		
-	vec4 blurAmount = uBlurAmounts[gl_Layer];
-	if (blurAmount.a >= 0.0f)
-	{
-		vec4 oColor;
-		float sum = 0;
-		for (float index = 0; index < blurAmount.z; index++)
-		{
-			float offset;
-			vec2 uv;
 
-			if (uPassNumber == 1)
-			{
-				offset = (index / (blurAmount.z - 1) - 0.5) * blurAmount.x;
-				uv = gs_texcoord + vec2(0, offset);
-			}
+    vec2 vecFromCenter = gl_FragCoord.xy - vec2(uTexWidth / 2, uTexHeight / 2);
+    float distFromCenter = dot(vecFromCenter, vecFromCenter);
+    if (distFromCenter <= (uRadiusToApply - 5) * (uRadiusToApply - 5))
+    {		
+	    vec4 blurAmount = uBlurAmounts[gl_Layer];
+	    if (blurAmount.a >= 0.0f)
+	    {
+	    	vec4 oColor;
+	    	float sum = 0;
+	    	for (float index = 0; index < blurAmount.z; index++)
+	    	{
+	    		float offset;
+	    		vec2 uv;
 
-			else if (uPassNumber == 2)
-			{
-				offset = (index / (blurAmount.z - 1) - 0.5) * blurAmount.x * 
-					uTexHeight / uTexWidth;
-				uv = gs_texcoord + vec2(offset, 0);
-			}
+	    		if (uPassNumber == 1)
+	    		{
+	    			offset = (index / (blurAmount.z - 1) - 0.5) * blurAmount.x;
+	    			uv = gs_texcoord + vec2(0, offset);
+	    		}
 
-			float stDevSquared = blurAmount.y * blurAmount.y;
-			float gauss = (1 / sqrt(2 * PI * stDevSquared)) * 
-				pow(E, - ((offset * offset) / (2 * stDevSquared)));
-			sum += gauss;
-			oColor += texture(uTex2dArray, vec3(uv, gl_Layer)) * gauss;
-		}
-		oColor = oColor / sum;
-		fs_color.rgb = oColor.rgb;
-	}
+	    		else if (uPassNumber == 2)
+	    		{
+	    			offset = (index / (blurAmount.z - 1) - 0.5) * 
+                        blurAmount.x * uTexHeight / uTexWidth;
+	    			uv = gs_texcoord + vec2(offset, 0);
+	    		}
 
-    if (uPassNumber == 2)
+	    		float stDevSquared = blurAmount.y * blurAmount.y;
+	    		float gauss = (1 / sqrt(2 * PI * stDevSquared)) * 
+	    			pow(E, - ((offset * offset) / (2 * stDevSquared)));
+	    		sum += gauss;
+	    		oColor += texture(uTex2dArray, vec3(uv, gl_Layer)) * gauss;
+	    	}
+	    	oColor = oColor / sum;
+	    	fs_color.rgb = oColor.rgb;
+	    }
+
+        if (uPassNumber == 2)
+        {
+            if (bool(uToColorGrade[gl_Layer]))
+            {
+                vec4 hsbc = uHSBC[gl_Layer];
+                fs_color = applyHSBEffect(fs_color, hsbc);
+            }
+
+            vec3 tempSettings = uTemperatureSettings[gl_Layer];
+
+            if (tempSettings.z >= 0.0f)
+            {
+                float factor = saturate(tempSettings.y * 2.0);
+                float colorTempK = mix(1000.0, 40000.0, tempSettings.x);
+
+                vec3 colorTempRGB = ColorTemperatureToRGB(colorTempK);
+
+                float originalLuminance = Luminance(fs_color.rgb);
+
+                vec3 blended = 
+                    mix(fs_color.rgb, fs_color.rgb * colorTempRGB, factor);
+                vec3 resultHSL = RGBtoHSL(blended);
+
+                vec3 luminancePreservedRGB = HSLtoRGB(
+                        vec3(resultHSL.x, resultHSL.y, originalLuminance));
+
+                fs_color.rgb = mix(blended, luminancePreservedRGB, 
+                        LUMINANCE_PRESERVATION);
+            }
+
+            if (bool(uToGreyscale[gl_Layer])) 
+            {
+                float grey_value = (fs_color.r + fs_color.g + fs_color.b) / 3.0;
+                fs_color.rgb = vec3(grey_value, grey_value, grey_value);
+            }
+
+            vec4 tintClr = uTintColors[gl_Layer];
+
+            if (tintClr.a >= 0.f)
+            {
+                vec3 mixColor = fs_color.rgb * tintClr.rgb;
+                fs_color.rgb = mixColor;
+            }
+
+            vec4 graceTintClr = uGraceTintColors[gl_Layer];
+            if (bool(uToGraceTint[gl_Layer]))
+            {
+                vec3 baseHSL = RGBtoHSL(fs_color.rgb);
+                vec3 blendHSL = HSVtoHSL(graceTintClr.rgb);
+                vec3 outHSL = vec3(blendHSL.rg, baseHSL.b);
+                fs_color = mix(fs_color, vec4(HSLtoRGB(outHSL), fs_color.a), 
+                        graceTintClr.a);
+            }
+        }
+    }
+
+    else if (distFromCenter <= (uRadiusToApply + 5) * (uRadiusToApply + 5))
     {
-        if (bool(uToColorGrade[gl_Layer]))
-        {
-            vec4 hsbc = uHSBC[gl_Layer];
-            fs_color = applyHSBEffect(fs_color, hsbc);
-        }
+        vec3 blurAmount = vec3(0.01f, 0.01f, 10);
+        vec4 oColor;
+	    float sum = 0;
+	    for (float index = 0; index < blurAmount.z; index++)
+	    {
+	    	float offset;
+	    	vec2 uv;
 
-        vec3 tempSettings = uTemperatureSettings[gl_Layer];
+    		if (uPassNumber == 1)
+    		{
+    			offset = (index / (blurAmount.z - 1) - 0.5) * blurAmount.x;
+    			uv = gs_texcoord + vec2(0, offset);
+    		}
 
-        if (tempSettings.z >= 0.0f)
-        {
-            float factor = saturate(tempSettings.y * 2.0);
-            float colorTempK = mix(1000.0, 40000.0, tempSettings.x);
+    		else if (uPassNumber == 2)
+    		{
+    			offset = (index / (blurAmount.z - 1) - 0.5) * 
+                       blurAmount.x * uTexHeight / uTexWidth;
+    			uv = gs_texcoord + vec2(offset, 0);
+    		}
 
-            vec3 colorTempRGB = ColorTemperatureToRGB(colorTempK);
-        
-            float originalLuminance = Luminance(fs_color.rgb);
-            
-            vec3 blended = 
-                mix(fs_color.rgb, fs_color.rgb * colorTempRGB, factor);
-            vec3 resultHSL = RGBtoHSL(blended);
-        
-            vec3 luminancePreservedRGB = HSLtoRGB(
-                    vec3(resultHSL.x, resultHSL.y, originalLuminance));
-            
-            fs_color.rgb = mix(blended, luminancePreservedRGB, 
-                    LUMINANCE_PRESERVATION);
-        }
-
-        if (bool(uToGreyscale[gl_Layer])) 
-        {
-            float grey_value = (fs_color.r + fs_color.g + fs_color.b) / 3.0;
-            fs_color.rgb = vec3(grey_value, grey_value, grey_value);
-        }
-
-        vec4 tintClr = uTintColors[gl_Layer];
-
-        if (tintClr.a >= 0.f)
-        {
-            vec3 mixColor = fs_color.rgb * tintClr.rgb;
-            fs_color.rgb = mixColor;
-        }
-
-        vec4 graceTintClr = uGraceTintColors[gl_Layer];
-        if (bool(uToGraceTint[gl_Layer]))
-        {
-            vec3 baseHSL = RGBtoHSL(fs_color.rgb);
-            vec3 blendHSL = HSVtoHSL(graceTintClr.rgb);
-            vec3 outHSL = vec3(blendHSL.rg, baseHSL.b);
-            fs_color = mix(fs_color, vec4(HSLtoRGB(outHSL), fs_color.a), 
-                    graceTintClr.a);
-        }
+    		float stDevSquared = blurAmount.y * blurAmount.y;
+    		float gauss = (1 / sqrt(2 * PI * stDevSquared)) * 
+    			pow(E, - ((offset * offset) / (2 * stDevSquared)));
+    		sum += gauss;
+    		oColor += texture(uTex2dArray, vec3(uv, gl_Layer)) * gauss;
+    	}
+    	oColor = oColor / sum;
+    	fs_color.rgb = oColor.rgb;
     }
 }

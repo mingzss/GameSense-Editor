@@ -1,7 +1,7 @@
 #version 440
 in vec2 vs_texcoord;
-in vec4 sprite_color;
-flat in uint texture_slot;
+in vec4 vs_sprite_color;
+flat in uint vs_texture_slot;
 
 out vec4 fs_color;
 
@@ -12,5 +12,5 @@ uniform vec4 outlineColor;
 
 void main()
 {
-	fs_color = sprite_color;
+	fs_color = vs_sprite_color;
 }

@@ -1,7 +1,7 @@
 #version 440
-in vec2 vs_texcoord;
-in vec4 sprite_color;
-flat in uint texture_slot;
+in vec2 gs_texcoord;
+in vec4 gs_sprite_color;
+flat in uint gs_texture_slot;
 
 out vec4 fs_color;
 
@@ -11,5 +11,5 @@ uniform vec4 outlineColor;
 
 void main()
 {
-	fs_color = vec4(1.f, 1.f, 1.f, texture(textureSamples[texture_slot], vs_texcoord).r) *  sprite_color;
+	fs_color = vec4(1.f, 1.f, 1.f, texture(textureSamples[gs_texture_slot], gs_texcoord).r) * gs_sprite_color;
 }
