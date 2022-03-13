@@ -13,7 +13,6 @@ uniform int 					uPassNumber;
 uniform int                     uToColorGrade[MAX_LAYERS];
 uniform int                     uToGreyscale[MAX_LAYERS];
 uniform int                     uToGraceTint[MAX_LAYERS];
-uniform float                   uRadiusToApply;
 uniform float 					uTexWidth;
 uniform float 					uTexHeight;
 uniform vec3                    uTemperatureSettings[MAX_LAYERS];
@@ -21,6 +20,7 @@ uniform vec4                    uHSBC[MAX_LAYERS];
 uniform vec4					uBlurAmounts[MAX_LAYERS];
 uniform vec4                    uTintColors[MAX_LAYERS];
 uniform vec4                    uGraceTintColors[MAX_LAYERS];
+uniform vec4                    uRadiusToApply;
 uniform sampler2DArray          uTex2dArray;
 
 float saturate(float v) { return clamp(v, 0.0,       1.0);       }
@@ -148,7 +148,7 @@ void main()
 
     vec2 vecFromCenter = gl_FragCoord.xy - vec2(uTexWidth / 2, uTexHeight / 2);
     float distFromCenter = dot(vecFromCenter, vecFromCenter);
-    if (distFromCenter <= (uRadiusToApply - 5) * (uRadiusToApply - 5))
+    if (distFromCenter <= (uRadiusToApply.x * uRadiusToApply.x))
     {		
 	    vec4 blurAmount = uBlurAmounts[gl_Layer];
 	    if (blurAmount.a >= 0.0f)
@@ -239,30 +239,29 @@ void main()
         }
     }
 
-    else if (distFromCenter <= (uRadiusToApply + 5) * (uRadiusToApply + 5))
+    else if (distFromCenter <= (uRadiusToApply.y * uRadiusToApply.y))
     {
-        vec3 blurAmount = vec3(0.01f, 0.01f, 10);
         vec4 oColor;
 	    float sum = 0;
-	    for (float index = 0; index < blurAmount.z; index++)
+	    for (float index = 0; index < 10; index++)
 	    {
 	    	float offset;
 	    	vec2 uv;
 
     		if (uPassNumber == 1)
     		{
-    			offset = (index / (blurAmount.z - 1) - 0.5) * blurAmount.x;
+    			offset = (index / 9 - 0.5) * uRadiusToApply.z;
     			uv = gs_texcoord + vec2(0, offset);
     		}
 
     		else if (uPassNumber == 2)
     		{
-    			offset = (index / (blurAmount.z - 1) - 0.5) * 
-                       blurAmount.x * uTexHeight / uTexWidth;
+    			offset = (index / 9 - 0.5) * uRadiusToApply.z *
+                 uTexHeight / uTexWidth;
     			uv = gs_texcoord + vec2(offset, 0);
     		}
 
-    		float stDevSquared = blurAmount.y * blurAmount.y;
+    		float stDevSquared = uRadiusToApply.w * uRadiusToApply.w;
     		float gauss = (1 / sqrt(2 * PI * stDevSquared)) * 
     			pow(E, - ((offset * offset) / (2 * stDevSquared)));
     		sum += gauss;
