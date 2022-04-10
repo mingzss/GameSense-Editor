@@ -33,6 +33,9 @@ namespace GSEngine
         public static extern int GetHeight();
 
         [MethodImpl(MethodImplOptions.InternalCall)]
+        public static extern void SetShowCursor(bool show);
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
         private static extern void GetCenterOfScreen_Native(out Vector2 outCenter);
     }
 }
