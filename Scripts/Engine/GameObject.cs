@@ -34,6 +34,10 @@ namespace GSEngine
             {
                 return GetEntityNameByID_Native(ID);
             }
+            set
+            {
+                SetEntityName(ID, value);
+            }
         }
 
         public void EnableEntity(ulong ent = NIL)
@@ -465,6 +469,9 @@ namespace GSEngine
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         private static extern string GetEntityNameByID_Native(ulong entity);
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        private static extern string SetEntityName(ulong entity, string name);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         private static extern void EnableEntity_Native(ulong entity, bool isEnabled);
