@@ -431,6 +431,12 @@ namespace GSEngine
             return new GameObject(id);
         }
 
+        public static GameObject InstantiatePrefab(string file = "")
+        {
+            ulong id = InstantiatePrefab_Native(file);
+            return new GameObject(id);
+        }
+
         public static void Destroy(GameObject obj)
         {
             DestroyEntity_Native(obj.ID);
@@ -444,6 +450,9 @@ namespace GSEngine
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         private static extern ulong CreateEntity_Native(string name, bool isUI);
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        private static extern ulong InstantiatePrefab_Native(string file);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         private static extern void DestroyEntity_Native(ulong entity);
