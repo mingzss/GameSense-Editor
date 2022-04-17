@@ -16,6 +16,6 @@ namespace GSEngine
         public static extern void Disconnect();
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        public extern bool SendData(string data);
+        public static extern bool SendData(IntPtr data, uint size);
     }
 }
